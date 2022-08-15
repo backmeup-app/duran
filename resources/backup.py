@@ -39,5 +39,6 @@ class Backup(Resource):
             return {
                 "message": "backup operation failed"
             }
-        print(upload_response)
+        
+        (uuid, url) = upload_response
         return ""

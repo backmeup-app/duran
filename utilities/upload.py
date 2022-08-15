@@ -11,11 +11,10 @@ def upload_to_cloudinary(backup, resource, service):
     uuid = str(uuid4())
 
     try:
-        cloudinary.uploader.upload(backup, folder=folder, public_id=uuid, resource_type='auto')
+        response = cloudinary.uploader.upload(backup, folder=folder, public_id=uuid, access_mode='public', resource_type='auto')
+        url = response['secure_url']
     except Exception as e:
         print(e)
         return None
-
-    url = cloudinary.CloudinaryImage(uuid).build_url()
 
     return (uuid, url)
