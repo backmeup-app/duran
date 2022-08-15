@@ -5,9 +5,9 @@ import time
 # has been made today for the resource
 def validate_resource(resource, backup_service):
     now = datetime.now()
-    year = int(now.strftime("%Y", now))
-    month = int(now.strftime("%m", now))
-    day = int(now.strftime("%d", now))
+    year = int(now.strftime("%Y"))
+    month = int(now.strftime("%m"))
+    day = int(now.strftime("%d"))
     start = datetime(year, month, day, 0, 0, 0)
     end = datetime(year, month, day, 23, 59, 59)
     backup = backup_service.find_one(
