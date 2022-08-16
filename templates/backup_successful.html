@@ -1,0 +1,42 @@
+{% extends layout.html %} {% block title %} {{ resource['name'].title() }} -
+Backup Successful {% endblock %} {% block body %}
+<div
+  style="
+    padding: 30px;
+    margin: 50px 50px 0 50px;
+    background: white;
+    line-height: 1.7;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1),
+      0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  "
+>
+  <table align="center">
+    <tr>
+      <td align="center">
+        <img
+          width="60px"
+          height="60px"
+          src="https://res.cloudinary.com/olamileke/image/upload/v1660687381/backmeup/assets/email/check_rmths4.png"
+        />
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <div style="margin: 10px 0">
+          <p style="margin: 0 0 10px 0; text-align: center">
+            Hello {{ user['first_name'] }}. {{ resource['name'].title() }} has
+            just been backed up successfully.
+          </p>
+          <p style="text-align: center">{{ timestamp }}</p>
+        </div>
+      </td>
+    </tr>
+    <tr>
+      <td align="center">
+        <button style="margin: 10px 0">Manage Your Backups</button>
+      </td>
+    </tr>
+  </table>
+</div>
+
+{% endblock %}

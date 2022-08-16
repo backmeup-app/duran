@@ -1,6 +1,6 @@
 from flask import request
 from flask_restful import Resource, reqparse
-from bson.json_util import dumps
+from datetime import datetime
 from utilities.service import get_service
 from utilities.resource import validate_resource
 from utilities.upload import upload_to_cloudinary
@@ -36,9 +36,16 @@ class Backup(Resource):
         )
 
         if upload_response is None:
-            return {
-                "message": "backup operation failed"
-            }
-        
+            return {"message": "backup operation failed"}
+
         (uuid, url) = upload_response
+        self.backup_service.insert_one(
+            {
+                "uuid": uuid,
+                "resource": resource["_id"],
+                "url": url,
+                "created_at": datetime.utcnow(),
+                "updated_at": datetime.utcnow(),
+            }
+        )
         return ""
