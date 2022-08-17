@@ -59,9 +59,9 @@ class Backup(Resource):
             resource=resource,
             service=service,
             user=user,
-            timestamp=get_timestamp()
+            timestamp=get_timestamp(),
         )
 
         mail.send()
 
-        return ''
+        return ""
