@@ -8,14 +8,11 @@ from utilities.service import get_service
 def resource_middleware(method):
     @wraps(method)
     def middleware(*args, **kwargs):
-        print('aaa')
         resource_uuid = kwargs.get("resource_uuid")
         resource_service = get_service("resources")
         service_service = get_service("services")
         user_service = get_service("users")
-        print('oww kay')
         resource = resource_service.find_one({"uuid": resource_uuid})
-        print('ooh lala')
 
         if resource is None:
             return {
@@ -31,7 +28,8 @@ def resource_middleware(method):
             key = None
         else:
             key = auth_header.split(" ")[1]
-            is_authorized = key in service["api_keys"]
+            api_keys = list(map(lambda key: key['key'], service["api_keys"]))
+            is_authorized = key in api_keys
 
         if not is_authorized:
             print(service.get("notifications").get("events").get("BR_WRONG_CREDENTIALS"))
