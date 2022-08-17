@@ -1,8 +1,10 @@
 from flask import request
 from flask_restful import Resource, reqparse
 from datetime import datetime
+from utilities.date import get_timestamp
 from utilities.service import get_service
 from utilities.resource import validate_resource
+from utilities.mail import Mail
 from utilities.upload import upload_to_cloudinary
 from middleware.resource import resource_middleware
 
@@ -23,13 +25,14 @@ class Backup(Resource):
         self.parser.parse_args()
         resource = self.resource_service.find_one({"uuid": resource_uuid})
         service = self.service_service.find_one({"_id": resource.get("service")})
+        user = self.user_service.find_one({"_id": service.get("user")})
 
-        if not validate_resource(resource, self.backup_service):
-            return {
-                "message": "resource with uuid {0} has been backed up already today".format(
-                    resource_uuid
-                )
-            }
+        # if not validate_resource(resource, self.backup_service):
+        #     return {
+        #         "message": "resource with uuid {0} has been backed up already today".format(
+        #             resource_uuid
+        #         )
+        #     }
 
         upload_response = upload_to_cloudinary(
             request.files.get("backup"), resource, service
@@ -48,4 +51,17 @@ class Backup(Resource):
                 "updated_at": datetime.utcnow(),
             }
         )
-        return ""
+
+        mail = Mail(
+            user["email"],
+            "{0} - New Backup".format(resource["name"].capitalize()),
+            "backup_successful.html",
+            resource=resource,
+            service=service,
+            user=user,
+            timestamp=get_timestamp()
+        )
+
+        mail.send()
+
+        return ''
