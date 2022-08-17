@@ -52,16 +52,17 @@ class Backup(Resource):
             }
         )
 
-        mail = Mail(
-            user["email"],
-            "{0} - New Backup".format(resource["name"].capitalize()),
-            "backup_successful.html",
-            resource=resource,
-            service=service,
-            user=user,
-            timestamp=get_timestamp(),
-        )
+        if service.get("notifications").get("events").get("BR_SUCCESSFUL"):
+            mail = Mail(
+                user["email"],
+                "{0} - New Backup".format(resource["name"].capitalize()),
+                "backup_successful.html",
+                resource=resource,
+                service=service,
+                user=user,
+                timestamp=get_timestamp(),
+            )
 
-        mail.send()
+            mail.send()
 
         return ""

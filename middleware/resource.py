@@ -32,7 +32,6 @@ def resource_middleware(method):
             is_authorized = key in api_keys
 
         if not is_authorized:
-            print(service.get("notifications").get("events").get("BR_WRONG_CREDENTIALS"))
             if service.get("notifications").get("events").get("BR_WRONG_CREDENTIALS"):
                 mail = Mail(
                     user["email"],
