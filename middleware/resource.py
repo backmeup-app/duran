@@ -1,5 +1,6 @@
 from flask import request
 from functools import wraps
+from utilities.backup import is_backed_up_today
 from utilities.date import get_timestamp
 from utilities.mail import Mail
 from utilities.service import get_service
@@ -13,8 +14,6 @@ def resource_middleware(method):
         service_service = get_service("services")
         user_service = get_service("users")
         resource = resource_service.find_one({"uuid": resource_uuid})
-
-        print(request.environ.get('REMOTE_ADDR'))
 
         if resource is None:
             return {
@@ -51,6 +50,11 @@ def resource_middleware(method):
             return {
                 "message": "unauthorized",
             }, 401
+
+        # if not is_backed_up_today(resource, get_service("backups")):
+        #     return {
+        #         "message": "resource has been backed up today"
+        #     }, 400
 
         return method(*args, **kwargs)
 

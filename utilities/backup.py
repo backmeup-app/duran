@@ -3,7 +3,7 @@ import time
 
 # Validation to make sure that not more than 1 backup
 # has been made today for the resource
-def validate_resource(resource, backup_service):
+def is_backed_up_today(resource, backup_service):
     now = datetime.now()
     year = int(now.strftime("%Y"))
     month = int(now.strftime("%m"))
