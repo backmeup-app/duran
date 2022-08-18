@@ -14,6 +14,8 @@ def resource_middleware(method):
         user_service = get_service("users")
         resource = resource_service.find_one({"uuid": resource_uuid})
 
+        print(request.environ.get('REMOTE_ADDR'))
+
         if resource is None:
             return {
                 "message": "resource with uuid {0} does not exist".format(resource_uuid)

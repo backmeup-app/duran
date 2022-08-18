@@ -1,21 +1,11 @@
 {% extends 'layout.html' %} {% block title %} {{ resource['name'].title() }} -
 Backup Successful {% endblock %} {% block body %}
-<div
-  style="
-    padding: 30px;
-    margin: 50px;
-    background: white;
-    line-height: 30px;
-    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1),
-      0 2px 4px -1px rgba(0, 0, 0, 0.06);
-  "
->
+<div class="content">
   <table align="center">
     <tr>
       <td align="center">
         <img
-          width="53px"
-          height="53px"
+          class="icon-failure"
           src="https://res.cloudinary.com/olamileke/image/upload/v1660771214/backmeup/assets/email/karlsson-x-sign-1_q9ceeo.png"
         />
       </td>
@@ -24,7 +14,7 @@ Backup Successful {% endblock %} {% block body %}
       <td>
         <div style="margin: {% if key %} 15px 0 {% else %} 10px 0 {% endif %}">
           <p
-            style="margin: 0 0 {% if key %} 16px {% else %} 10px {% endif %} 0; text-align: center"
+            style="margin: 0 0 {% if key %} 16px {% else %} 10px {% endif %} 0;"
           >
             Hi {{ user['first_name'] }}. {% if key %} A backup for {{
             resource['name'].capitalize() }} {{ service['name'].capitalize() }})
@@ -38,15 +28,15 @@ Backup Successful {% endblock %} {% block body %}
             style="
               width: 100%;
               padding: 14px;
-              text-align: center;
               margin: 0 0 16px 0;
+              line-height: 25px;
               background: rgba(255, 222, 173, 0.1);
             "
           >
             {{ key }}
           </p>
           {% endif %}
-          <p style="text-align: center">{{ timestamp }}</p>
+          <p>{{ timestamp }}</p>
         </div>
       </td>
     </tr>

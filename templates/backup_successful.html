@@ -1,21 +1,13 @@
 {% extends 'layout.html' %} {% block title %} {{ resource['name'].title() }} -
 Backup Successful {% endblock %} {% block body %}
-<div
-  style="
-    padding: 30px;
-    margin: 50px;
-    background: white;
-    line-height: 30px;
-    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1),
-      0 2px 4px -1px rgba(0, 0, 0, 0.06);
-  "
->
+<div class="content">
   <table align="center">
     <tr>
       <td align="center">
         <img
           width="60px"
           height="60px"
+          class="icon-success"
           src="https://res.cloudinary.com/olamileke/image/upload/v1660687381/backmeup/assets/email/check_rmths4.png"
         />
       </td>
@@ -23,12 +15,12 @@ Backup Successful {% endblock %} {% block body %}
     <tr>
       <td>
         <div style="margin: 10px 0">
-          <p style="margin: 0 0 10px 0; text-align: center">
+          <p style="margin: 0 0 10px 0">
             Hello {{ user['first_name'] }}. A new backup for {{
             resource['name'].capitalize() }} ({{ service['name'].capitalize()
             }}) was just made successfully.
           </p>
-          <p style="text-align: center">{{ timestamp }}</p>
+          <p>{{ timestamp }}</p>
         </div>
       </td>
     </tr>
