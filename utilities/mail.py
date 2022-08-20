@@ -1,4 +1,5 @@
-from flask import current_app, render_template
+from flask import render_template
+from utilities.exception import log_exception
 from os import environ
 import requests
 import sys
@@ -13,7 +14,7 @@ class Mail:
 
     def send(self):
         try:
-            requests.post(
+            response = requests.post(
                 environ.get("MAIL_BASE_URL"),
                 auth=("api", environ.get("MAIL_API_KEY")),
                 data={
@@ -25,6 +26,9 @@ class Mail:
                     "html": render_template(self.template, **self.args),
                 },
             )
+
+            if response.status_code != 200:
+                raise Exception("Mail notification failed")
         except Exception:
             exception = sys.exc_info()
-            print(exception)
+            log_exception(exception)

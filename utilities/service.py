@@ -4,8 +4,8 @@ from os import environ
 
 
 def get_service(service: str):
-    if g.get("db") is not None:
-        return g.get("db")[service]
+    if g.get("services") is not None:
+        return g.get("services")[service]
     uri = "mongodb+srv://{0}:{1}@{2}/{3}?retryWrites=true&w=majority".format(
         environ.get("DB_USERNAME"),
         environ.get("DB_PASSWORD"),
@@ -14,5 +14,11 @@ def get_service(service: str):
     )
     client = MongoClient(uri)
     db = client[environ.get("DB_NAME")]
-    g.db = db
-    return db[service]
+    services = {
+        "users": db["users"],
+        "services": db["services"],
+        "resources": db["resources"],
+        "backups": db["services"],
+    }
+    g.services = services
+    return services[service]

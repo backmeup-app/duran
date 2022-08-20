@@ -57,4 +57,4 @@ class Backup(Resource):
 
             mail.send()
 
-        return ""
+        return {"message": "resource backed up successfully"}

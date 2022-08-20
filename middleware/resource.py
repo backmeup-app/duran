@@ -51,10 +51,8 @@ def resource_middleware(method):
                 "message": "unauthorized",
             }, 401
 
-        # if not is_backed_up_today(resource, get_service("backups")):
-        #     return {
-        #         "message": "resource has been backed up today"
-        #     }, 400
+        if not is_backed_up_today(resource, get_service("backups")):
+            return {"message": "resource has been backed up today"}, 400
 
         return method(*args, **kwargs)
 

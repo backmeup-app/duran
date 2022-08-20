@@ -2,7 +2,7 @@ import cloudinary
 import cloudinary.uploader
 import sys
 from os import environ
-from flask import current_app
+from utilities.exception import log_exception
 from uuid import uuid4
 
 
@@ -23,7 +23,7 @@ def upload_to_cloudinary(backup, resource, service):
         url = response["secure_url"]
     except Exception:
         exception = sys.exc_info()
-        print(exception)
+        log_exception(exception)
         return None
 
     return (uuid, url)
