@@ -1,6 +1,7 @@
-from flask import render_template
+from flask import current_app, render_template
 from os import environ
 import requests
+import sys
 
 
 class Mail:
@@ -24,5 +25,6 @@ class Mail:
                     "html": render_template(self.template, **self.args),
                 },
             )
-        except Exception as e:
-            print(str(e))
+        except Exception:
+            exception = sys.exc_info()
+            print(exception)

@@ -29,7 +29,7 @@ def resource_middleware(method):
             key = None
         else:
             key = auth_header.split(" ")[1]
-            api_keys = list(map(lambda key: key['key'], service["api_keys"]))
+            api_keys = list(map(lambda key: key["key"], service["api_keys"]))
             is_authorized = key in api_keys
 
         if not is_authorized:

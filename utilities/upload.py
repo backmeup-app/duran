@@ -1,6 +1,8 @@
 import cloudinary
 import cloudinary.uploader
+import sys
 from os import environ
+from flask import current_app
 from uuid import uuid4
 
 
@@ -19,8 +21,9 @@ def upload_to_cloudinary(backup, resource, service):
             resource_type="auto",
         )
         url = response["secure_url"]
-    except Exception as e:
-        print(e)
+    except Exception:
+        exception = sys.exc_info()
+        print(exception)
         return None
 
     return (uuid, url)
